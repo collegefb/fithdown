@@ -1,0 +1,33 @@
+group 'yt.javi'
+version '1.0-SNAPSHOT'
+
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.2.RELEASE")
+  }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+
+repositories {
+  mavenCentral()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+  compile("org.springframework.boot:spring-boot-starter-web")
+  compile project(':core')
+  testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+sourceSets {
+  main.java.srcDirs = ['src/main/java']
+  test.java.srcDirs = ['src/test/unit', 'src/test/integration']
+}
