@@ -60,11 +60,9 @@ public class SourceController {
   @RequestMapping(method = POST)
   public ResponseEntity<SourceResponseEntity> post(@RequestBody CreateSourceRequestBody requestBody) {
     return new ResponseEntity<SourceResponseEntity>(
-            new SourceResponseEntity(
                     createSourceService.execute(
                             new CreateSourceRequest(requestBody.getName(), requestBody.getUrl())
-                    )
-            ),
+                    ).map(SourceResponseEntity::new).orElse(null),
             CREATED
     );
   }

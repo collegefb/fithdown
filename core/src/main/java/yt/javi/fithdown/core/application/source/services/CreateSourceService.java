@@ -7,7 +7,13 @@ import yt.javi.fithdown.core.application.source.responses.SourceResponseFactory;
 import yt.javi.fithdown.core.model.source.SourceFactory;
 import yt.javi.fithdown.core.model.source.SourceRepository;
 
-public class CreateSourceService implements Service<CreateSourceRequest, SourceResponse> {
+import java.net.MalformedURLException;
+import java.util.Optional;
+
+import static java.util.Optional.empty;
+import static java.util.Optional.ofNullable;
+
+public class CreateSourceService implements Service<CreateSourceRequest, Optional<SourceResponse>> {
   private final SourceFactory sourceFactory;
 
   private final SourceRepository sourceRepository;
@@ -25,11 +31,17 @@ public class CreateSourceService implements Service<CreateSourceRequest, SourceR
   }
 
   @Override
-  public SourceResponse execute(CreateSourceRequest request) {
-    return sourceResponseFactory.sourceResponse(
-            sourceRepository.save(
-                    sourceFactory.getSource(request.getName(), request.getUrl())
-            )
-    );
+  public Optional<SourceResponse> execute(CreateSourceRequest request) {
+    try {
+      return ofNullable(
+              sourceResponseFactory.sourceResponse(
+                      sourceRepository.save(
+                              sourceFactory.getSource(request.getName(), request.getUrl())
+                      )
+              )
+      );
+    } catch (MalformedURLException e) {
+      return empty();
+    }
   }
 }

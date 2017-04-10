@@ -10,6 +10,8 @@ import yt.javi.fithdown.core.model.source.Source;
 import yt.javi.fithdown.core.model.source.SourceFactory;
 import yt.javi.fithdown.core.model.source.SourceRepository;
 
+import java.net.MalformedURLException;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.doReturn;
@@ -49,14 +51,14 @@ public class CreateSourceServiceTest {
   }
 
   @Test
-  public void itIsPossibleToAddANewSource() {
+  public void itIsPossibleToAddANewSource() throws MalformedURLException {
     doReturn(SOURCE_NAME).when(createSourceRequest).getName();
     doReturn(SOURCE_URL).when(createSourceRequest).getUrl();
     doReturn(source).when(sourceFactory).getSource(SOURCE_NAME, SOURCE_URL);
     doReturn(source).when(sourceRepository).save(source);
     doReturn(sourceResponse).when(sourceResponseFactory).sourceResponse(source);
 
-    assertThat(service.execute(createSourceRequest), is(sourceResponse));
+    assertThat(service.execute(createSourceRequest).orElse(null), is(sourceResponse));
 
     verify(sourceRepository, times(1)).save(source);
     verify(sourceResponseFactory, times(1)).sourceResponse(source);

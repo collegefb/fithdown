@@ -1,15 +1,15 @@
 package yt.javi.fithdown.core.model.source;
 
-import java.net.URI;
+import java.net.URL;
 
 public class Source {
   private final SourceId sourceId;
 
   private final String name;
 
-  private URI url;
+  private URL url;
 
-  Source(SourceId sourceId, String name, URI url) {
+  Source(SourceId sourceId, String name, URL url) {
     this.sourceId = sourceId;
     this.name = name;
     this.url = url;
@@ -23,11 +23,11 @@ public class Source {
     return name;
   }
 
-  public URI getUrl() {
+  public URL getUrl() {
     return url;
   }
 
-  public Source setUrl(URI url) {
+  public Source setUrl(URL url) {
     this.url = url;
 
     return this;

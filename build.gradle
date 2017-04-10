@@ -23,6 +23,7 @@ targetCompatibility = 1.8
 
 dependencies {
   compile("org.springframework.boot:spring-boot-starter-web")
+  compile("com.rometools:rome:1.7.1")
   compile project(':core')
   testCompile('org.springframework.boot:spring-boot-starter-test')
 }
