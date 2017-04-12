@@ -16,6 +16,7 @@ import yt.javi.fithdown.core.model.article.ArticleRepository;
 
 @Configuration
 public class ArticleConfiguration {
+
   @Bean
   public SyndFeedInput syndFeedInput() {
     return new SyndFeedInput();
@@ -32,56 +33,42 @@ public class ArticleConfiguration {
   }
 
   @Bean
-  public ArticleRepository articleRepository(
-          SyndFeedInput syndFeedInput,
-          ArticleFactory factory
-  ) {
+  public ArticleRepository articleRepository(SyndFeedInput syndFeedInput, ArticleFactory factory) {
     return new ArticleRepositoryInMemory(syndFeedInput, factory);
   }
 
   @Bean
   public CreateArticleService createArticleService(
-          ArticleFactory factory,
-          ArticleRepository repository,
-          ArticleResponseFactory responseFactory
-  ) {
+      ArticleFactory factory,
+      ArticleRepository repository,
+      ArticleResponseFactory responseFactory) {
     return new CreateArticleService(factory, repository, responseFactory);
   }
 
   @Bean
   public GetAllArticlesService getAllArticlesService(
-          ArticleRepository repository,
-          ArticleResponseFactory responseFactory
-  ) {
+      ArticleRepository repository, ArticleResponseFactory responseFactory) {
     return new GetAllArticlesService(repository, responseFactory);
   }
 
   @Bean
   public GetArticleService getArticleService(
-          ArticleRepository repository,
-          ArticleResponseFactory responseFactory
-  ) {
+      ArticleRepository repository, ArticleResponseFactory responseFactory) {
     return new GetArticleService(repository, responseFactory);
   }
 
   @Bean
   public FetchArticlesFromUrlService fetchArticlesFromUrlService(
-          ArticleRepository repository,
-          ArticleResponseFactory responseFactory
-  ) {
+      ArticleRepository repository, ArticleResponseFactory responseFactory) {
     return new FetchArticlesFromUrlService(repository, responseFactory);
   }
 
   @Bean
   public FetchFeedsScheduledTask fetchFeedsScheduledTask(
-          GetAllSourcesService getAllSourcesService,
-          FetchArticlesFromUrlService fetchArticlesFromUrlService,
-          CreateArticleService createArticleService
-  ) {
+      GetAllSourcesService getAllSourcesService,
+      FetchArticlesFromUrlService fetchArticlesFromUrlService,
+      CreateArticleService createArticleService) {
     return new FetchFeedsScheduledTask(
-            getAllSourcesService,
-            fetchArticlesFromUrlService,
-            createArticleService
-    );
+        getAllSourcesService, fetchArticlesFromUrlService, createArticleService);
   }
 }

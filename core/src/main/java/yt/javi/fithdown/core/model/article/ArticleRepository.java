@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 public interface ArticleRepository {
+
   Article save(Article article);
 
   Optional<Article> findById(String id);

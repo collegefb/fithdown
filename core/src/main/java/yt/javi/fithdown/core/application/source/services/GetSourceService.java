@@ -1,14 +1,14 @@
 package yt.javi.fithdown.core.application.source.services;
 
+import java.util.Optional;
 import yt.javi.fithdown.core.application.Service;
 import yt.javi.fithdown.core.application.source.requests.GetSourceRequest;
 import yt.javi.fithdown.core.application.source.responses.SourceResponse;
 import yt.javi.fithdown.core.application.source.responses.SourceResponseFactory;
 import yt.javi.fithdown.core.model.source.SourceRepository;
 
-import java.util.Optional;
-
 public class GetSourceService implements Service<GetSourceRequest, Optional<SourceResponse>> {
+
   private final SourceRepository repository;
 
   private final SourceResponseFactory responseFactory;

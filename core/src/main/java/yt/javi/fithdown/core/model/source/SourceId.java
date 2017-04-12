@@ -1,11 +1,12 @@
 package yt.javi.fithdown.core.model.source;
 
-import java.util.UUID;
-
 import static java.util.UUID.fromString;
 import static java.util.UUID.randomUUID;
 
+import java.util.UUID;
+
 public class SourceId {
+
   private final UUID id;
 
   SourceId() {

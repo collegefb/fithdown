@@ -3,6 +3,7 @@ package yt.javi.fithdown.core.application.article.requests;
 import java.util.Collection;
 
 public class CreateArticleRequest {
+
   private final Long created;
 
   private final String url;
@@ -13,7 +14,8 @@ public class CreateArticleRequest {
 
   private final Collection<String> categories;
 
-  public CreateArticleRequest(Long created, String url, String title, String content, Collection<String> categories) {
+  public CreateArticleRequest(
+      Long created, String url, String title, String content, Collection<String> categories) {
     this.created = created;
     this.url = url;
     this.title = title;

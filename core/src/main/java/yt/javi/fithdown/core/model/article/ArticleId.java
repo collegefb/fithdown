@@ -1,11 +1,12 @@
 package yt.javi.fithdown.core.model.article;
 
-import java.util.UUID;
-
 import static java.util.UUID.fromString;
 import static java.util.UUID.randomUUID;
 
+import java.util.UUID;
+
 public class ArticleId {
+
   private final UUID id;
 
   ArticleId() {
@@ -19,5 +20,4 @@ public class ArticleId {
   public String getId() {
     return id.toString();
   }
-
 }

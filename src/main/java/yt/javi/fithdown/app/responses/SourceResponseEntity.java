@@ -3,6 +3,7 @@ package yt.javi.fithdown.app.responses;
 import yt.javi.fithdown.core.application.source.responses.SourceResponse;
 
 public class SourceResponseEntity {
+
   private final SourceResponse response;
 
   public SourceResponseEntity(SourceResponse response) {
@@ -20,5 +21,4 @@ public class SourceResponseEntity {
   public String getUrl() {
     return response.getUrl();
   }
-
 }

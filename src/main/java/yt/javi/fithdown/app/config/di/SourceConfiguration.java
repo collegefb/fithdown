@@ -12,6 +12,7 @@ import yt.javi.fithdown.core.model.source.SourceRepository;
 
 @Configuration
 public class SourceConfiguration {
+
   @Bean
   public SourceResponseFactory sourceResponseFactory() {
     return new SourceResponseFactory();
@@ -29,26 +30,19 @@ public class SourceConfiguration {
 
   @Bean
   public CreateSourceService createSourceService(
-          SourceFactory factory,
-          SourceRepository repository,
-          SourceResponseFactory responseFactory
-  ) {
+      SourceFactory factory, SourceRepository repository, SourceResponseFactory responseFactory) {
     return new CreateSourceService(factory, repository, responseFactory);
   }
 
   @Bean
   public GetAllSourcesService getAllSourcesService(
-          SourceRepository repository,
-          SourceResponseFactory responseFactory
-  ) {
+      SourceRepository repository, SourceResponseFactory responseFactory) {
     return new GetAllSourcesService(repository, responseFactory);
   }
 
   @Bean
   public GetSourceService getSourceService(
-          SourceRepository repository,
-          SourceResponseFactory responseFactory
-  ) {
+      SourceRepository repository, SourceResponseFactory responseFactory) {
     return new GetSourceService(repository, responseFactory);
   }
 }

@@ -3,6 +3,7 @@ package yt.javi.fithdown.core.application.source.responses;
 import yt.javi.fithdown.core.model.source.Source;
 
 public class SourceResponse {
+
   private final Source source;
 
   SourceResponse(Source source) {
