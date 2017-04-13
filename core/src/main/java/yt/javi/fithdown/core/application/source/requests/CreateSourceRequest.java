@@ -1,6 +1,7 @@
 package yt.javi.fithdown.core.application.source.requests;
 
 public class CreateSourceRequest {
+
   private final String name;
 
   private final String url;

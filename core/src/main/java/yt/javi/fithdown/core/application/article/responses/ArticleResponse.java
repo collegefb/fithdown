@@ -1,12 +1,12 @@
 package yt.javi.fithdown.core.application.article.responses;
 
-import yt.javi.fithdown.core.model.article.Article;
-
-import java.util.Collection;
-
 import static java.time.ZoneOffset.UTC;
 
+import java.util.Collection;
+import yt.javi.fithdown.core.model.article.Article;
+
 public class ArticleResponse {
+
   private final Article article;
 
   ArticleResponse(Article article) {

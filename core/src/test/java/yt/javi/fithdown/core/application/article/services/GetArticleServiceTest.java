@@ -1,5 +1,13 @@
 package yt.javi.fithdown.core.application.article.services;
 
+import static java.util.Optional.empty;
+import static java.util.Optional.of;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -9,18 +17,8 @@ import yt.javi.fithdown.core.application.article.responses.ArticleResponseFactor
 import yt.javi.fithdown.core.model.article.Article;
 import yt.javi.fithdown.core.model.article.ArticleRepository;
 
-import static java.util.Optional.empty;
-import static java.util.Optional.of;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.MockitoAnnotations.initMocks;
-
 public class GetArticleServiceTest {
+
   private static final String ARTICLE_ID = "test";
 
   private GetArticleService service;
@@ -48,23 +46,19 @@ public class GetArticleServiceTest {
 
   @Test
   public void itIsPossibleToGetAnExistingSource() {
-    doReturn(ARTICLE_ID).when(request).getId();
-    doReturn(of(article)).when(repository).findById(ARTICLE_ID);
-    doReturn(response).when(responseFactory).articleResponse(article);
+    when(request.getId()).thenReturn(ARTICLE_ID);
+    when(repository.findById(ARTICLE_ID)).thenReturn(of(article));
+    when(responseFactory.articleResponse(article)).thenReturn(response);
 
     assertThat(service.execute(request).orElse(null), is(response));
-    verify(repository, times(1)).findById(ARTICLE_ID);
-    verify(responseFactory, times(1)).articleResponse(article);
   }
 
   @Test
   public void itIsNotPossibleToGetANonExistingSource() {
-    doReturn(ARTICLE_ID).when(request).getId();
-    doReturn(empty()).when(repository).findById(ARTICLE_ID);
-    doReturn(response).when(responseFactory).articleResponse(article);
+    when(request.getId()).thenReturn(ARTICLE_ID);
+    when(repository.findById(ARTICLE_ID)).thenReturn(empty());
+    when(responseFactory.articleResponse(article)).thenReturn(response);
 
     assertThat(service.execute(request).orElse(null), nullValue());
-    verify(repository, times(1)).findById(ARTICLE_ID);
-    verify(responseFactory, never()).articleResponse(article);
   }
 }

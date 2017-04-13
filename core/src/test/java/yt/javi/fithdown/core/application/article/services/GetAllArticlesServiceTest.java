@@ -1,5 +1,11 @@
 package yt.javi.fithdown.core.application.article.services;
 
+import static java.util.Collections.singletonList;
+import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -9,17 +15,8 @@ import yt.javi.fithdown.core.application.article.responses.ArticleResponseFactor
 import yt.javi.fithdown.core.model.article.Article;
 import yt.javi.fithdown.core.model.article.ArticleRepository;
 
-import static java.util.Collections.singletonList;
-import static org.hamcrest.CoreMatchers.hasItem;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.MockitoAnnotations.initMocks;
-
-;
-
 public class GetAllArticlesServiceTest {
+
   private GetAllArticlesService service;
 
   @Mock
@@ -46,11 +43,9 @@ public class GetAllArticlesServiceTest {
 
   @Test
   public void itIsPossibleToGetAllSources() {
-    doReturn(singletonList(article)).when(repository).findAll();
-    doReturn(response).when(responseFactory).articleResponse(article);
+    when(repository.findAll()).thenReturn(singletonList(article));
+    when(responseFactory.articleResponse(article)).thenReturn(response);
 
     assertThat(service.execute(request), hasItem(response));
-    verify(repository, times(1)).findAll();
-    verify(responseFactory, times(1)).articleResponse(article);
   }
 }

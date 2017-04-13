@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class Article {
+
   private final ArticleId articleId;
 
   private final LocalDateTime created;

@@ -1,20 +1,19 @@
 package yt.javi.fithdown.app.infrastructure.repositories.inmemory;
 
+import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import yt.javi.fithdown.core.model.source.Source;
 import yt.javi.fithdown.core.model.source.SourceId;
 
-import static org.hamcrest.CoreMatchers.hasItem;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.MockitoAnnotations.initMocks;
-
 public class SourceRepositoryInMemoryTest {
+
   private static final String SOURCE_ID = "test";
 
   private SourceRepositoryInMemory repository;
@@ -33,17 +32,16 @@ public class SourceRepositoryInMemoryTest {
 
   @Test
   public void itIsPossibleToSaveASource() {
-    doReturn(SOURCE_ID).when(sourceId).getId();
-    doReturn(sourceId).when(source).getSourceId();
+    when(sourceId.getId()).thenReturn(SOURCE_ID);
+    when(source.getSourceId()).thenReturn(sourceId);
 
     assertThat(repository.save(source), is(source));
-    verify(sourceId, times(1)).getId();
   }
 
   @Test
   public void itIsPossibleToGetAnExistingSourceByItsId() {
-    doReturn(SOURCE_ID).when(sourceId).getId();
-    doReturn(sourceId).when(source).getSourceId();
+    when(sourceId.getId()).thenReturn(SOURCE_ID);
+    when(source.getSourceId()).thenReturn(sourceId);
     repository.save(source);
 
     assertThat(repository.findById(SOURCE_ID).orElse(null), is(source));
@@ -56,8 +54,8 @@ public class SourceRepositoryInMemoryTest {
 
   @Test
   public void itIsPossibleToGetAllSources() {
-    doReturn(SOURCE_ID).when(sourceId).getId();
-    doReturn(sourceId).when(source).getSourceId();
+    when(sourceId.getId()).thenReturn(SOURCE_ID);
+    when(source.getSourceId()).thenReturn(sourceId);
     repository.save(source);
 
     assertThat(repository.findAll(), hasItem(source));
@@ -65,8 +63,8 @@ public class SourceRepositoryInMemoryTest {
 
   @Test
   public void itIsPossibleToRemoveAnExistingSource() {
-    doReturn(SOURCE_ID).when(sourceId).getId();
-    doReturn(sourceId).when(source).getSourceId();
+    when(sourceId.getId()).thenReturn(SOURCE_ID);
+    when(source.getSourceId()).thenReturn(sourceId);
     repository.save(source);
 
     assertThat(repository.remove(source), is(true));
@@ -74,8 +72,8 @@ public class SourceRepositoryInMemoryTest {
 
   @Test
   public void itIsNotPossibleToRemoveANonExistingSource() {
-    doReturn(SOURCE_ID).when(sourceId).getId();
-    doReturn(sourceId).when(source).getSourceId();
+    when(sourceId.getId()).thenReturn(SOURCE_ID);
+    when(source.getSourceId()).thenReturn(sourceId);
 
     assertThat(repository.remove(source), is(false));
   }

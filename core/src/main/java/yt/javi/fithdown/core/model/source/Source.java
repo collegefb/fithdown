@@ -3,6 +3,7 @@ package yt.javi.fithdown.core.model.source;
 import java.net.URL;
 
 public class Source {
+
   private final SourceId sourceId;
 
   private final String name;

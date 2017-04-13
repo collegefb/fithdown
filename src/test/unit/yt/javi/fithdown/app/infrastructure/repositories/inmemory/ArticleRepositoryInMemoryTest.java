@@ -1,23 +1,5 @@
 package yt.javi.fithdown.app.infrastructure.repositories.inmemory;
 
-import com.rometools.rome.feed.synd.SyndContent;
-import com.rometools.rome.feed.synd.SyndEntry;
-import com.rometools.rome.feed.synd.SyndFeed;
-import com.rometools.rome.io.FeedException;
-import com.rometools.rome.io.SyndFeedInput;
-import com.rometools.rome.io.XmlReader;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mock;
-import yt.javi.fithdown.core.model.article.Article;
-import yt.javi.fithdown.core.model.article.ArticleFactory;
-import yt.javi.fithdown.core.model.article.ArticleId;
-
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Collection;
-import java.util.Date;
-
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 import static org.hamcrest.CoreMatchers.hasItem;
@@ -26,12 +8,28 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import com.rometools.rome.feed.synd.SyndContent;
+import com.rometools.rome.feed.synd.SyndEntry;
+import com.rometools.rome.feed.synd.SyndFeed;
+import com.rometools.rome.io.FeedException;
+import com.rometools.rome.io.SyndFeedInput;
+import com.rometools.rome.io.XmlReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Date;
+import java.util.List;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mock;
+import yt.javi.fithdown.core.model.article.Article;
+import yt.javi.fithdown.core.model.article.ArticleFactory;
+import yt.javi.fithdown.core.model.article.ArticleId;
+
 public class ArticleRepositoryInMemoryTest {
+
   private static final String ARTICLE_TITLE = "test";
 
   private static final String ARTICLE_CONTENT = "test";
@@ -40,7 +38,7 @@ public class ArticleRepositoryInMemoryTest {
 
   private static final String ARTICLE_LINK = "http://test.ing";
 
-  private static final Collection<String> ARTICLE_CATEGORIES = emptyList();
+  private static final List<String> ARTICLE_CATEGORIES = emptyList();
 
   private ArticleRepositoryInMemory repository;
 
@@ -74,17 +72,16 @@ public class ArticleRepositoryInMemoryTest {
 
   @Test
   public void itIsPossibleToSaveAArticle() {
-    doReturn(ARTICLE_ID).when(articleId).getId();
-    doReturn(articleId).when(article).getArticleId();
+    when(articleId.getId()).thenReturn(ARTICLE_ID);
+    when(article.getArticleId()).thenReturn(articleId);
 
     assertThat(repository.save(article), is(article));
-    verify(articleId, times(1)).getId();
   }
 
   @Test
   public void itIsPossibleToGetAnExistingArticleByItsId() {
-    doReturn(ARTICLE_ID).when(articleId).getId();
-    doReturn(articleId).when(article).getArticleId();
+    when(articleId.getId()).thenReturn(ARTICLE_ID);
+    when(article.getArticleId()).thenReturn(articleId);
     repository.save(article);
 
     assertThat(repository.findById(ARTICLE_ID).orElse(null), is(article));
@@ -97,8 +94,8 @@ public class ArticleRepositoryInMemoryTest {
 
   @Test
   public void itIsPossibleToGetAllArticles() {
-    doReturn(ARTICLE_ID).when(articleId).getId();
-    doReturn(articleId).when(article).getArticleId();
+    when(articleId.getId()).thenReturn(ARTICLE_ID);
+    when(article.getArticleId()).thenReturn(articleId);
     repository.save(article);
 
     assertThat(repository.findAll(), hasItem(article));
@@ -106,8 +103,8 @@ public class ArticleRepositoryInMemoryTest {
 
   @Test
   public void itIsPossibleToRemoveAnExistingArticle() {
-    doReturn(ARTICLE_ID).when(articleId).getId();
-    doReturn(articleId).when(article).getArticleId();
+    when(articleId.getId()).thenReturn(ARTICLE_ID);
+    when(article.getArticleId()).thenReturn(articleId);
     repository.save(article);
 
     assertThat(repository.remove(article), is(true));
@@ -115,24 +112,24 @@ public class ArticleRepositoryInMemoryTest {
 
   @Test
   public void itIsNotPossibleToRemoveANonExistingArticle() {
-    doReturn(ARTICLE_ID).when(articleId).getId();
-    doReturn(articleId).when(article).getArticleId();
+    when(articleId.getId()).thenReturn(ARTICLE_ID);
+    when(article.getArticleId()).thenReturn(articleId);
 
     assertThat(repository.remove(article), is(false));
   }
 
   @Test
   public void itFetchesArticlesFromAGivenUrl() throws FeedException, MalformedURLException {
-    doReturn(feed).when(feedInput).build(any(XmlReader.class));
-    doReturn(singletonList(entry)).when(feed).getEntries();
-    doReturn(new Date()).when(entry).getPublishedDate();
-    doReturn(ARTICLE_LINK).when(entry).getLink();
-    doReturn(ARTICLE_TITLE).when(entry).getTitle();
-    doReturn(content).when(entry).getDescription();
-    doReturn(ARTICLE_CATEGORIES).when(entry).getCategories();
-    doReturn(ARTICLE_CONTENT).when(content).getValue();
-    doReturn(article).when(factory).getArticle(anyLong(), eq(ARTICLE_LINK), eq(ARTICLE_TITLE), eq(ARTICLE_CONTENT));
-    doReturn(article).when(article).setCategories(ARTICLE_CATEGORIES);
+    when(feedInput.build(any(XmlReader.class))).thenReturn(feed);
+    when(feed.getEntries()).thenReturn(singletonList(entry));
+    when(entry.getPublishedDate()).thenReturn(new Date());
+    when(entry.getLink()).thenReturn(ARTICLE_LINK);
+    when(entry.getTitle()).thenReturn(ARTICLE_TITLE);
+    when(entry.getDescription()).thenReturn(content);
+    when(entry.getCategories()).thenReturn(emptyList());
+    when(content.getValue()).thenReturn(ARTICLE_CONTENT);
+    when(factory.getArticle(anyLong(), eq(ARTICLE_LINK), eq(ARTICLE_TITLE), eq(ARTICLE_CONTENT))).thenReturn(article);
+    when(article.setCategories(ARTICLE_CATEGORIES)).thenReturn(article);
 
     assertThat(repository.fetchFromUrl(new URL("http://github.com")), hasItem(article));
   }
